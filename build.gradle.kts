@@ -1,6 +1,11 @@
+val projectJvmTarget = "1.8"
+val kotlinVersion: String by project
+val ktorVersion: String by project
+val logback: String by project
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.3.71"
-    id("io.gitlab.arturbosch.detekt") version "1.7.4"
+    id("io.gitlab.arturbosch.detekt") version "1.7.4" // 코드 분석용용
     id("org.jmailen.kotlinter") version "2.3.2"
 }
 
@@ -15,7 +20,8 @@ allprojects {
 
 subprojects {
     apply(plugin = "kotlin")
-    apply(plugin = "org.jmailen.kotlinter")
+    apply(plugin = "org.jmailen.kotlinter") // 코드 포맷
+    apply(plugin = "io.gitlab.arturbosch.detekt")
 
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -26,7 +32,7 @@ subprojects {
         indentSize = 4
         reporters = arrayOf("checkstyle", "plain")
         experimentalRules = false
-        disabledRules = emptyArray<String>()
+        disabledRules = emptyArray()
         fileBatchSize = 30
     }
 
@@ -34,16 +40,16 @@ subprojects {
         compileKotlin {
             kotlinOptions {
                 freeCompilerArgs = listOf("-Xjsr305=strict")
-                jvmTarget = "1.8"
+                jvmTarget = projectJvmTarget
             }
-            dependsOn(processResources) // kotlin 에서 ConfigurationProperties
+            dependsOn(processResources)
         }
 
 
         compileTestKotlin {
             kotlinOptions {
                 freeCompilerArgs = listOf("-Xjsr305=strict")
-                jvmTarget = "1.8"
+                jvmTarget = projectJvmTarget
             }
         }
     }
