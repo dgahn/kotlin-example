@@ -1,0 +1,3 @@
+[submodule "protobuf-example"]
+	path = protobuf-example
+	url = git@github.com:dgahn/protobuf-example.git
