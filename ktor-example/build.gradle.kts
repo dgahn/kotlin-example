@@ -7,4 +7,3 @@ plugins {
 application {
     mainClassName = "me.dgahn.WebEngineKt"
 }
-

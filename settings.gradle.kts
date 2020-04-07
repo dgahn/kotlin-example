@@ -1,2 +1,2 @@
 rootProject.name = "kotlin-example"
-include("ktor-example")
+include("ktor-example", "protobuf-example")
