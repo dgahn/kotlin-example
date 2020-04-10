@@ -1,3 +1,7 @@
+import com.google.protobuf.gradle.generateProtoTasks
+import com.google.protobuf.gradle.id
+import com.google.protobuf.gradle.ofSourceSet
+import com.google.protobuf.gradle.plugins
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 
@@ -32,6 +36,8 @@ subprojects {
 
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("ch.qos.logback:logback-classic:1.2.3")
+        implementation("io.github.microutils:kotlin-logging:1.7.9")
     }
 
     kotlinter {
@@ -62,6 +68,15 @@ subprojects {
     }
 }
 
+project(":grpc-server-example") {
+    dependencies {
+        implementation(project(":protobuf-example"))
+
+        implementation("io.grpc:grpc-netty-shaded:1.28.1")
+        implementation("io.grpc:grpc-stub:1.28.1")
+    }
+}
+
 project(":ktor-example") {
     dependencies {
         implementation(project(":protobuf-example"))
@@ -78,13 +93,33 @@ project(":ktor-example") {
 project(":protobuf-example") {
     apply(plugin = "com.google.protobuf")
     dependencies {
+        if (JavaVersion.current().isJava9Compatible) {
+            // Workaround for @javax.annotation.Generated
+            // see: https://github.com/grpc/grpc-java/issues/3633
+            implementation("javax.annotation:javax.annotation-api:1.3.1")
+        }
+
         implementation("com.google.protobuf:protobuf-java:3.11.4")
+        implementation("io.grpc:grpc-protobuf:1.28.1")
+        implementation("io.grpc:grpc-stub:1.28.1")
     }
 
     protobuf {
-        generatedFilesBaseDir = "$projectDir/generated"
+        generatedFilesBaseDir = "$projectDir/build/generated/source"
         protoc {
             artifact = "com.google.protobuf:protoc:3.11.4"
+        }
+        plugins {
+            id("grpc") {
+                artifact = "io.grpc:protoc-gen-grpc-java:1.28.1"
+            }
+        }
+        generateProtoTasks {
+            ofSourceSet("main").forEach {
+                it.plugins {
+                    id("grpc")
+                }
+            }
         }
     }
 
@@ -93,7 +128,8 @@ project(":protobuf-example") {
             proto.srcDir("src/main/proto")
         }
         main {
-            java.srcDir("build/generated/source/proto/main/java")
+            java.srcDir("build/generated/source/main/java")
+            java.srcDir("build/generated/source/main/grpc")
         }
     }
 }
