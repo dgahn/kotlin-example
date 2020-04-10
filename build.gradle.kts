@@ -68,6 +68,12 @@ subprojects {
     }
 }
 
+project(":common") {
+    dependencies {
+        implementation("org.hibernate:hibernate-entitymanager:5.4.14.Final")
+    }
+}
+
 project(":grpc-server-example") {
     dependencies {
         implementation(project(":protobuf-example"))
