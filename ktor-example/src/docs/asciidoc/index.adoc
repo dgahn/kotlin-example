@@ -1,0 +1,11 @@
+= Spring Rest Docs Example
+DeokGi Author;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:sectnums:
+
+include::{snippets}/get-person-by-id/path-parameters.adoc[]
+include::{snippets}/get-person-by-id/http-request.adoc[]
+include::{snippets}/get-person-by-id/response-fields.adoc[]

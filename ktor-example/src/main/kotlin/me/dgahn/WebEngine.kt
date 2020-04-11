@@ -7,6 +7,8 @@ import io.ktor.application.install
 import io.ktor.features.CallLogging
 import io.ktor.features.DefaultHeaders
 import io.ktor.http.ContentType
+import io.ktor.request.accept
+import io.ktor.response.respondBytes
 import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.routing
@@ -48,10 +50,13 @@ private suspend fun PipelineContext<Unit, ApplicationCall>.getPerson() {
     val id = call.parameters["id"]!!.toLong()
     val personRepo by inject(PersonRepository::class.java)
     val person = personRepo.findOne(id)
-    val res = person!!.toProto().buildJson()
-    call.respondText(text = res, contentType = ContentType.Application.Json)
-}
+    val personProto = person!!.toProto()
+    when(call.request.accept()) {
+        "application/protobuf" -> call.respondBytes(personProto.toByteArray())
+        else -> call.respondText(personProto.buildJson(), ContentType.Application.Json)
+    }
 
+}
 
 val hibernateModule = module(createdAtStart = true) {
     singleBy<PersonRepository, PersonHibernateRepository>()

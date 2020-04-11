@@ -18,6 +18,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.7.4" // 코드 분석용용
     id("org.jmailen.kotlinter") version "2.3.2"
     id("com.google.protobuf") version "0.8.8"
+    id("org.asciidoctor.convert") version "1.5.9.2"
 }
 
 allprojects {
@@ -51,6 +52,9 @@ subprojects {
         testImplementation("org.assertj:assertj-core:3.15.0")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.1")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.1")
+
+        testImplementation("org.testcontainers:junit-jupiter:1.13.0")
+        testImplementation("org.testcontainers:postgresql:1.13.0")
     }
 
     kotlinter {
@@ -97,6 +101,7 @@ project(":grpc-server-example") {
 }
 
 project(":ktor-example") {
+    apply(plugin = "org.asciidoctor.convert")
     dependencies {
         implementation(project(":common"))
         implementation(project(":protobuf-example"))
@@ -108,6 +113,9 @@ project(":ktor-example") {
 
         implementation("com.google.protobuf:protobuf-java-util:3.11.4")
 
+        asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.4.RELEASE")
+        testImplementation("org.springframework.restdocs:spring-restdocs-restassured:2.0.4.RELEASE")
+
         testImplementation("io.ktor:ktor-server-tests:1.3.1")
     }
 }
@@ -118,9 +126,6 @@ project(":hibernate-example") {
         implementation("org.hibernate:hibernate-entitymanager:5.4.14.Final")
         implementation("org.postgresql:postgresql:42.2.12")
         implementation("com.h2database:h2:1.4.200")
-
-        testImplementation("org.testcontainers:junit-jupiter:1.13.0")
-        testImplementation("org.testcontainers:postgresql:1.13.0")
     }
 }
 
