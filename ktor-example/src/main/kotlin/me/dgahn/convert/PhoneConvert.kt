@@ -4,7 +4,7 @@ import me.dgahn.person.PersonProto
 import me.dgahn.phone.Phone
 import me.dgahn.phone.PhoneType
 
-fun Phone.toProto() = PersonProto.Person.PhoneNumber.newBuilder()
+fun Phone.toProto(): PersonProto.Person.PhoneNumber = PersonProto.Person.PhoneNumber.newBuilder()
     .setNumber(this.number)
     .setType(this.type.toProto())
     .build()
