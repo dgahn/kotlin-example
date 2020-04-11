@@ -1,19 +1,19 @@
 package me.dgahn.person
 
-import me.dgahn.phone.PhoneNumber
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.OneToMany
+import me.dgahn.phone.Phone
 
 @Entity
 data class Person(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     val id: Long,
     val name: String,
     val email: String,
-    @OneToMany(mappedBy = "person")
-    val phoneNumbers: List<PhoneNumber>
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    val phones: List<Phone>
 )

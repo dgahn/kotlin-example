@@ -1,22 +1,22 @@
 package me.dgahn.phone
 
-import me.dgahn.person.Person
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.ManyToOne
+import me.dgahn.person.Person
 
 @Entity
-data class PhoneNumber(
+data class Phone(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     val id: Long,
     val number: String,
     @Enumerated(EnumType.STRING)
     val type: PhoneType,
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     val person: Person
 )
