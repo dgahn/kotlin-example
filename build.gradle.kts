@@ -87,6 +87,10 @@ subprojects {
 
 project(":common") {
     dependencies {
+        implementation(project(":protobuf-example"))
+
+        implementation("io.grpc:grpc-protobuf:1.28.1")
+        implementation("com.google.protobuf:protobuf-java-util:3.11.4")
         implementation("org.hibernate:hibernate-entitymanager:5.4.14.Final")
     }
 }
@@ -94,9 +98,13 @@ project(":common") {
 project(":grpc-server-example") {
     dependencies {
         implementation(project(":protobuf-example"))
+        implementation(project(":common"))
+        implementation(project(":hibernate-example"))
 
         implementation("io.grpc:grpc-netty-shaded:1.28.1")
         implementation("io.grpc:grpc-stub:1.28.1")
+        implementation("io.grpc:grpc-protobuf:1.28.1")
+        implementation("org.koin:koin-core:2.1.5")
     }
 }
 

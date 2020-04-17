@@ -1,13 +1,23 @@
 package me.dgahn
 
 import io.grpc.ServerBuilder
-import me.dgahn.person.PersonProto
+import me.dgahn.person.PersonHibernateRepository
+import me.dgahn.person.PersonRepository
 import me.dgahn.person.PersonService
+import me.dgahn.phone.PhoneNumberRepository
 import mu.KotlinLogging
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 private val logger = KotlinLogging.logger {}
 
 fun main() {
+
+    startKoin {
+        printLogger()
+        modules(hibernateModule)
+    }
+
     grpcServer()
 }
 
@@ -28,4 +38,8 @@ fun grpcServer() {
     server.start()
     logger.info { "gRPC Server Start port: $port" }
     server.awaitTermination()
+}
+
+val hibernateModule = module(createdAtStart = true) {
+    single { PersonHibernateRepository() }
 }

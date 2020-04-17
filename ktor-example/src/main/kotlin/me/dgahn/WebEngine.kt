@@ -51,11 +51,10 @@ private suspend fun PipelineContext<Unit, ApplicationCall>.getPerson() {
     val personRepo by inject(PersonRepository::class.java)
     val person = personRepo.findOne(id)
     val personProto = person!!.toProto()
-    when(call.request.accept()) {
+    when (call.request.accept()) {
         "application/protobuf" -> call.respondBytes(personProto.toByteArray())
         else -> call.respondText(personProto.buildJson(), ContentType.Application.Json)
     }
-
 }
 
 val hibernateModule = module(createdAtStart = true) {

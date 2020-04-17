@@ -1,28 +1,16 @@
 package me.dgahn.person
 
 import io.grpc.stub.StreamObserver
+import org.koin.java.KoinJavaComponent.inject
 
-class PersonService: PersonServiceGrpc.PersonServiceImplBase() {
+class PersonService : PersonServiceGrpc.PersonServiceImplBase() {
 
-    override fun getPerson1(
-        request: PersonProto.Person,
-        responseObserver: StreamObserver<PersonProto.Person>
-    ) {
-        super.getPerson1(request, responseObserver)
+    private val personRepo: PersonRepository by inject(PersonRepository::class.java)
+
+    override fun getPersonOne(request: PersonProto.Id, responseObserver: StreamObserver<PersonProto.Person>) {
+        val person = personRepo.findOne(request.personId)
+        responseObserver.onNext(person!!.toProto())
+        responseObserver.onCompleted()
     }
 
-    override fun getPerson2(responseObserver: StreamObserver<PersonProto.Person>?): StreamObserver<PersonProto.Person> {
-        return super.getPerson2(responseObserver)
-    }
-
-    override fun getPerson3(
-        request: PersonProto.Person?,
-        responseObserver: StreamObserver<PersonProto.Person>?
-    ) {
-        super.getPerson3(request, responseObserver)
-    }
-
-    override fun getPerson4(responseObserver: StreamObserver<PersonProto.Person>?): StreamObserver<PersonProto.Person> {
-        return super.getPerson4(responseObserver)
-    }
 }
