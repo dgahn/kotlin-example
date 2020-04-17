@@ -95,6 +95,16 @@ project(":common") {
     }
 }
 
+project(":grpc-client-example") {
+    dependencies {
+        implementation(project(":protobuf-example"))
+
+        implementation("io.grpc:grpc-netty-shaded:1.28.1")
+        implementation("io.grpc:grpc-stub:1.28.1")
+        implementation("io.grpc:grpc-protobuf:1.28.1")
+    }
+}
+
 project(":grpc-server-example") {
     dependencies {
         implementation(project(":protobuf-example"))

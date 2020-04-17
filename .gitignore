@@ -209,8 +209,4 @@ hs_err_pid*
 !/gradle/wrapper/gradle-wrapper.jar
 .idea
 
-ktor-example/build
-grpc-server-example/build
-hibernate-example/build
-protobuf-example/build
-common/build
+**/build
