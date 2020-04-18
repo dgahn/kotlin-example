@@ -144,6 +144,7 @@ project(":hibernate-example") {
         implementation("org.hibernate:hibernate-entitymanager:5.4.14.Final")
         implementation("org.postgresql:postgresql:42.2.12")
         implementation("com.h2database:h2:1.4.200")
+        implementation("com.natpryce:konfig:1.6.10.0")
     }
 }
 

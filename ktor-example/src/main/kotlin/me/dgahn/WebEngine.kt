@@ -15,15 +15,16 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.util.pipeline.PipelineContext
-import me.dgahn.convert.buildJson
-import me.dgahn.convert.toProto
 import me.dgahn.person.PersonHibernateRepository
 import me.dgahn.person.PersonRepository
+import me.dgahn.person.buildJson
+import me.dgahn.person.toProto
 import me.dgahn.phone.PhoneNumberHibernateRepository
 import me.dgahn.phone.PhoneNumberRepository
 import mu.KotlinLogging
 import org.koin.dsl.module
 import org.koin.experimental.builder.singleBy
+import org.koin.java.KoinJavaComponent.get
 import org.koin.java.KoinJavaComponent.inject
 import org.koin.ktor.ext.Koin
 

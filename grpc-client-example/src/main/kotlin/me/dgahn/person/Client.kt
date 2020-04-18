@@ -9,7 +9,6 @@ fun main() {
     callGrpc()
 }
 
-
 fun callGrpc() {
     val channel = ManagedChannelBuilder.forAddress("localhost", 8081)
         .usePlaintext()

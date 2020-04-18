@@ -1,18 +1,16 @@
 package me.dgahn.person
 
-import javax.persistence.Persistence
+import me.dgahn.config.HibernateManager
 
-class PersonHibernateRepository : PersonRepository {
-
-    private val emf = Persistence.createEntityManagerFactory("person")
+class PersonHibernateRepository(private val hm: HibernateManager) : PersonRepository {
 
     override fun findOne(id: Long): Person? {
-        val em = emf.createEntityManager()
-        val tx = em.transaction
+        val session = hm.sessions.openSession()
+        val tx = session.transaction
         tx.begin()
         var person: Person? = null
         try {
-            person = em.createQuery(
+            person = session.createQuery(
                 "SELECT p FROM ${Person::class.java.simpleName} p WHERE p.id = :id",
                 Person::class.java
             )
@@ -22,7 +20,7 @@ class PersonHibernateRepository : PersonRepository {
         } catch (e: Exception) {
             tx.rollback()
         } finally {
-            em.close()
+            session.close()
         }
 
         return person

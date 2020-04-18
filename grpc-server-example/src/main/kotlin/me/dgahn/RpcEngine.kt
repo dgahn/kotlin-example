@@ -2,9 +2,7 @@ package me.dgahn
 
 import io.grpc.ServerBuilder
 import me.dgahn.person.PersonHibernateRepository
-import me.dgahn.person.PersonRepository
 import me.dgahn.person.PersonService
-import me.dgahn.phone.PhoneNumberRepository
 import mu.KotlinLogging
 import org.koin.core.context.startKoin
 import org.koin.dsl.module

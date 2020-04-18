@@ -12,5 +12,4 @@ class PersonService : PersonServiceGrpc.PersonServiceImplBase() {
         responseObserver.onNext(person!!.toProto())
         responseObserver.onCompleted()
     }
-
 }

@@ -1,21 +1,19 @@
 package me.dgahn.phone
 
-import javax.persistence.Persistence
+import me.dgahn.config.HibernateManager
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger { }
 
-class PhoneNumberHibernateRepository : PhoneNumberRepository {
-
-    private val emf = Persistence.createEntityManagerFactory("person")
+class PhoneNumberHibernateRepository(val hm: HibernateManager) : PhoneNumberRepository {
 
     override fun findOne(id: Long): Phone? {
-        val em = emf.createEntityManager()
-        val tx = em.transaction
+        val session = hm.sessions.openSession()
+        val tx = session.transaction
         tx.begin()
         var phone: Phone? = null
         try {
-            phone = em.createQuery(
+            phone = session.createQuery(
                 "SELECT ph FROM ${Phone::class.java.simpleName} ph WHERE ph.id = :id",
                 Phone::class.java
             )
@@ -25,7 +23,7 @@ class PhoneNumberHibernateRepository : PhoneNumberRepository {
         } catch (e: Exception) {
             tx.rollback()
         } finally {
-            em.close()
+            session.close()
         }
 
         return phone
