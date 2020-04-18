@@ -1,7 +1,9 @@
 package me.dgahn
 
 import io.grpc.ServerBuilder
+import me.dgahn.config.HibernateManager
 import me.dgahn.person.PersonHibernateRepository
+import me.dgahn.person.PersonRepository
 import me.dgahn.person.PersonService
 import mu.KotlinLogging
 import org.koin.core.context.startKoin
@@ -39,5 +41,6 @@ fun grpcServer() {
 }
 
 val hibernateModule = module(createdAtStart = true) {
-    single { PersonHibernateRepository() }
+    single { HibernateManager() }
+    single { PersonHibernateRepository(get()) }
 }

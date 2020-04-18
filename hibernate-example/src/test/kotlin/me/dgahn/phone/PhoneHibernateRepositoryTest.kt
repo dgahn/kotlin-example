@@ -22,7 +22,7 @@ class PhoneHibernateRepositoryTest {
     @Test
     fun `id가 1인 Phone을 조회할 수 있다`() {
         val id = 1L
-        val phoneNumberRepo = PhoneNumberHibernateRepository(HibernateManager)
+        val phoneNumberRepo = PhoneNumberHibernateRepository(HibernateManager())
         val phone = phoneNumberRepo.findOne(id)
 
         assertThat(phone).isNotNull

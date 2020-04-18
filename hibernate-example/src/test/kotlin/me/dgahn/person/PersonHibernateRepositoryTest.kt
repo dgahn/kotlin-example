@@ -23,7 +23,7 @@ class PersonHibernateRepositoryTest {
     @Test
     fun `id가 1인 Person을 조회할 수 있다`() {
         val id = 1L
-        val personRepo = PersonHibernateRepository(HibernateManager)
+        val personRepo = PersonHibernateRepository(HibernateManager())
         val person = personRepo.findOne(id)
 
         assertThat(person).isNotNull

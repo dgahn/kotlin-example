@@ -3,14 +3,14 @@ package me.dgahn.config
 import com.natpryce.konfig.ConfigurationProperties
 import com.natpryce.konfig.Key
 import com.natpryce.konfig.stringType
+import java.util.*
 import me.dgahn.person.Person
 import me.dgahn.phone.Phone
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder
 import org.hibernate.cfg.Configuration
 import org.hibernate.service.ServiceRegistry
-import java.util.*
 
-object HibernateManager {
+class HibernateManager {
     private val driver = Key("database.driver", stringType)
     private val user = Key("database.username", stringType)
     private val password = Key("database.password", stringType)

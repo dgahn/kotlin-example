@@ -15,6 +15,7 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.util.pipeline.PipelineContext
+import me.dgahn.config.HibernateManager
 import me.dgahn.person.PersonHibernateRepository
 import me.dgahn.person.PersonRepository
 import me.dgahn.person.buildJson
@@ -24,7 +25,6 @@ import me.dgahn.phone.PhoneNumberRepository
 import mu.KotlinLogging
 import org.koin.dsl.module
 import org.koin.experimental.builder.singleBy
-import org.koin.java.KoinJavaComponent.get
 import org.koin.java.KoinJavaComponent.inject
 import org.koin.ktor.ext.Koin
 
@@ -59,6 +59,7 @@ private suspend fun PipelineContext<Unit, ApplicationCall>.getPerson() {
 }
 
 val hibernateModule = module(createdAtStart = true) {
+    single { HibernateManager() }
     singleBy<PersonRepository, PersonHibernateRepository>()
     singleBy<PhoneNumberRepository, PhoneNumberHibernateRepository>()
 }

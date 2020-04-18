@@ -9,3 +9,4 @@ DeokGi Author;
 include::{snippets}/get-person-by-id/path-parameters.adoc[]
 include::{snippets}/get-person-by-id/http-request.adoc[]
 include::{snippets}/get-person-by-id/response-fields.adoc[]
+include::{snippets}/get-person-by-id/http-response.adoc[]
